@@ -1,0 +1,91 @@
+// ORIGINAL (preserved, not deleted — disabled by comment):
+// const voices = [
+//   {
+//     // ORIGINAL (preserved, not deleted — disabled by comment):
+//     // quote: 'Marcus saw the market three years before the rest of us. Betting alongside him changed the trajectory of my entire career.',
+//     quote: 'Aarya saw the market three years before the rest of us. Betting alongside him changed the trajectory of my entire career.',
+//     name: 'Elena Cardoso',
+//     role: 'Managing Partner, Meridian Ventures',
+//     image: 'https://api.getlayers.ai/storage/v1/object/public/public/assets/marcus-vane-6799bd1fb6/voices/voice-01.webp',
+//   },
+//   {
+//     quote: "He doesn't just write checks — he gets in the trenches at 6am and refuses to leave until the impossible part is solved.",
+//     name: 'David Okonkwo',
+//     role: 'Founder & CEO, Cadence Health',
+//     image: 'https://api.getlayers.ai/storage/v1/object/public/public/assets/marcus-vane-6799bd1fb6/voices/voice-02.webp',
+//   },
+//   {
+//     quote: "The most demanding mentor I've ever had, and the only reason our company survived its first winter. Relentless, generous, right.",
+//     name: 'Priya Nandakumar',
+//     role: 'CEO, Northwind Energy',
+//     image: 'https://api.getlayers.ai/storage/v1/object/public/public/assets/marcus-vane-6799bd1fb6/voices/voice-03.webp',
+//   },
+// ];
+// 
+// export function initVoices(motion: MediaQueryList): void {
+//   const buttons = [...document.querySelectorAll<HTMLButtonElement>('[data-voice]')];
+//   const quote = document.querySelector<HTMLElement>('#quote')!;
+//   const byline = document.querySelector<HTMLElement>('#quote-by')!;
+//   const image = document.querySelector<HTMLImageElement>('#voice-image')!;
+//   const section = document.querySelector('.voices-grid')!;
+//   let active = 0;
+//   let visible = false;
+//   let revision = 0;
+//   quote.setAttribute('aria-live', 'polite');
+//   quote.setAttribute('aria-atomic', 'true');
+//   function render(): void {
+//     const voice = voices[active];
+//     const currentRevision = ++revision;
+//     buttons.forEach((button, index) => {
+//       button.classList.toggle('voice-active', index === active);
+//       button.setAttribute('aria-pressed', String(index === active));
+//       button.setAttribute('aria-controls', 'quote');
+//     });
+//     const paragraph = document.createElement('p');
+//     const text = `“${voice.quote}”`;
+//     paragraph.setAttribute('aria-label', text);
+//     text.split(' ').forEach((word, index) => {
+//       const slot = document.createElement('span');
+//       slot.className = 'quote-word';
+//       slot.setAttribute('aria-hidden', 'true');
+//       slot.style.setProperty('--delay', `${index * 22}ms`);
+//       const inner = document.createElement('span');
+//       inner.textContent = word;
+//       slot.append(inner);
+//       paragraph.append(slot, ' ');
+//     });
+//     quote.replaceChildren(paragraph);
+//     byline.textContent = `${voice.name} — ${voice.role}`;
+//     if (image.src !== voice.image) image.src = voice.image;
+//     image.alt = voice.name;
+//     image.closest('figure')!.setAttribute('aria-label', voice.name);
+//     requestAnimationFrame(() => requestAnimationFrame(() => {
+//       if (currentRevision !== revision) return;
+//       if (visible || motion.matches) paragraph.querySelectorAll('.quote-word').forEach(word => word.classList.add('shown'));
+//     }));
+//   }
+//   function select(index: number): void {
+//     if (index === active) return;
+//     active = index;
+//     render();
+//   }
+//   buttons.forEach((button, index) => {
+//     button.addEventListener('pointerenter', (event) => { if (event.pointerType === 'mouse') select(index); });
+//     button.addEventListener('focus', () => select(index));
+//     button.addEventListener('click', () => select(index));
+//     button.addEventListener('keydown', (event) => {
+//       if (!['ArrowUp', 'ArrowDown', 'Home', 'End'].includes(event.key)) return;
+//       event.preventDefault();
+//       const next = event.key === 'Home' ? 0 : event.key === 'End' ? buttons.length - 1 : (index + (event.key === 'ArrowDown' ? 1 : -1) + buttons.length) % buttons.length;
+//       buttons[next].focus();
+//     });
+//   });
+//   const observer = new IntersectionObserver((entries) => {
+//     if (!entries.some(entry => entry.isIntersecting)) return;
+//     visible = true;
+//     render();
+//     observer.disconnect();
+//   }, { threshold: 0 });
+//   observer.observe(section);
+//   render();
+// }

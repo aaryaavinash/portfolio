@@ -1,0 +1,46 @@
+// ORIGINAL (preserved, not deleted — disabled by comment): src/impact.tsx
+// import { createRoot } from 'react-dom/client';
+// import { useLayoutEffect } from 'react';
+// import { ScrollTrigger } from 'gsap/ScrollTrigger';
+// import AnimatedContent from './components/AnimatedContent';
+// import Counter from './components/Counter';
+// 
+// function ImpactStats() {
+//   useLayoutEffect(() => { ScrollTrigger.refresh(); }, []);
+// 
+//   return (
+//     <AnimatedContent
+//       className="stats grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
+//       distance={40}
+//       direction="vertical"
+//       duration={1.1}
+//       ease="power3.out"
+//       blur={0}
+//       stagger={0.08}
+//       threshold={0.1}
+//     >
+//       <dl className="stat">
+//         <dd><Counter className="impact-counter" value={2} fontSize="inherit" motionBlur={false} fade={0.15} /></dd>
+//         <dt>Public repositories</dt>
+//       </dl>
+//       <dl className="stat">
+//         <dd><Counter className="impact-counter" value={1} fontSize="inherit" motionBlur={false} fade={0.15} /></dd>
+//         <dt>Original project</dt>
+//       </dl>
+//       <dl className="stat">
+//         <dd><Counter className="impact-counter" value={1} fontSize="inherit" motionBlur={false} fade={0.15} /></dd>
+//         <dt>Open source fork</dt>
+//       </dl>
+//       <dl className="stat">
+//         <dd><Counter className="impact-counter" value={2023} fontSize="inherit" motionBlur={false} fade={0.15} /></dd>
+//         <dt>GitHub account since</dt>
+//       </dl>
+//     </AnimatedContent>
+//   );
+// }
+// 
+// export function mountImpact(container: HTMLElement): () => void {
+//   const root = createRoot(container);
+//   root.render(<ImpactStats />);
+//   return () => root.unmount();
+// }

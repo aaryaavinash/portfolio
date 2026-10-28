@@ -1,0 +1,101 @@
+// ORIGINAL (preserved, not deleted — disabled by comment): tools/check-voices.mjs
+// // Exercise real testimonial logic without requiring a browser or test dependency.
+// import assert from 'node:assert/strict';
+// import { gsap } from 'gsap';
+// import { ScrollTrigger } from 'gsap/ScrollTrigger';
+// import { initVoices } from '../src/voices.ts';
+// 
+// class Element {
+//   children = [];
+//   attributes = new Map();
+//   events = new Map();
+//   style = { setProperty() {} };
+//   text = '';
+//   className = '';
+//   src = '';
+//   alt = '';
+//   writes = 0;
+//   opacity = 1;
+//   y = 0;
+//   classList = {
+//     add: (name) => { if (!this.className.split(' ').includes(name)) this.className += ` ${name}`; },
+//     toggle: (name, active) => {
+//       this.className = this.className.split(' ').filter(value => value !== name).join(' ');
+//       if (active) this.classList.add(name);
+//     },
+//   };
+//   set textContent(value) { this.text = value; this.children = []; }
+//   get textContent() { return this.text + this.children.map(child => typeof child === 'string' ? child : child.textContent).join(''); }
+//   setAttribute(name, value) { this.attributes.set(name, value); }
+//   append(...children) { this.children.push(...children); }
+//   replaceChildren(...children) { this.text = ''; this.children = children; this.writes++; }
+//   addEventListener(name, fn) { this.events.set(name, fn); }
+//   focus() { this.events.get('focus')?.({}); }
+//   querySelectorAll(selector) {
+//     const results = [];
+//     for (const child of this.children) {
+//       if (typeof child === 'string') continue;
+//       if (child.className.split(' ').includes(selector.slice(1))) results.push(child);
+//       results.push(...child.querySelectorAll(selector));
+//     }
+//     return results;
+//   }
+// }
+// const buttons = Array.from({ length: 3 }, () => new Element());
+// const quote = new Element(), byline = new Element(), image = new Element(), figure = new Element();
+// image.closest = () => figure;
+// const elements = new Map([['#quote', quote], ['#quote-by', byline], ['#voice-image', image], ['.voices-grid', new Element()]]);
+// globalThis.document = {
+//   querySelectorAll: () => buttons,
+//   querySelector: (selector) => elements.get(selector),
+//   createElement: () => new Element(),
+// };
+// let onEnter;
+// let triggerKilled = false;
+// const originalCreate = ScrollTrigger.create;
+// ScrollTrigger.create = (options) => { onEnter = options.onEnter; return { kill() { triggerKilled = true; } }; };
+// let preferenceChanged;
+// const motion = { matches: false, addEventListener(_name, callback) { preferenceChanged = callback; } };
+// const words = () => quote.children[0].children.filter(child => typeof child !== 'string').map(slot => slot.children[0]);
+// function flush() { gsap.globalTimeline.progress(1); }
+// const dispose = initVoices(motion);
+// flush();
+// assert.match(byline.textContent, /^Aarya Avinash —/);
+// assert.equal(buttons[0].attributes.get('aria-pressed'), 'true');
+// assert.ok(words().every(word => word.opacity === 0), 'Words wait for first viewport entry');
+// onEnter();
+// flush();
+// assert.ok(words().length > 10 && words().every(word => word.opacity === 1 && word.y === 0));
+// buttons[1].focus();
+// flush();
+// assert.match(quote.textContent, /Use each project/);
+// assert.match(byline.textContent, /^Aarya Avinash —/);
+// assert.match(image.src, /133252493/);
+// assert.equal(image.alt, "Aarya Avinash's GitHub profile photo");
+// const writes = quote.writes;
+// buttons[1].events.get('click')({});
+// assert.equal(quote.writes, writes, 'Selecting the same voice must not restart the animation');
+// buttons[2].events.get('pointerenter')({ pointerType: 'touch' });
+// assert.equal(image.alt, "Aarya Avinash's GitHub profile photo", 'Touch hover must not select a testimonial');
+// buttons[0].events.get('pointerenter')({ pointerType: 'mouse' });
+// buttons[2].events.get('click')({});
+// flush();
+// assert.equal(image.alt, "Aarya Avinash's GitHub profile photo");
+// assert.match(quote.textContent, /Good ideas get better/);
+// assert.equal(buttons.filter(button => button.attributes.get('aria-pressed') === 'true').length, 1);
+// let prevented = false;
+// buttons[2].events.get('keydown')({ key: 'Home', preventDefault() { prevented = true; } });
+// flush();
+// assert.equal(prevented, true);
+// assert.equal(image.alt, "Aarya Avinash's GitHub profile photo");
+// assert.equal(figure.attributes.get('aria-label'), "Aarya Avinash's GitHub profile photo");
+// buttons[2].events.get('click')({});
+// motion.matches = true;
+// preferenceChanged();
+// assert.ok(words().every(word => word.opacity === 1 && word.y === 0), 'Reduced motion immediately finishes the active reveal');
+// dispose();
+// assert.equal(triggerKilled, true, 'Dispose removes the section ScrollTrigger');
+// assert.equal(gsap.getTweensOf(words()).length, 0, 'Dispose leaves no quote tweens');
+// ScrollTrigger.create = originalCreate;
+// gsap.ticker.sleep();
+// console.log('PASS: GSAP quote reveal, ScrollTrigger entry callback, synchronized selection, rapid changes, keyboard, reduced motion and cleanup.');

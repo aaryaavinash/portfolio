@@ -1,0 +1,121 @@
+/* ORIGINAL (preserved, not deleted — disabled by comment): */
+/* @import "tailwindcss"; */
+/* @import "lenis/dist/lenis.css"; */
+/* @import "./reference.css" layer(components); */
+/*  */
+/* @theme { */
+/*   --font-display: "Anton", sans-serif; */
+/*   --font-sans: "Onest", sans-serif; */
+/*   --color-background: #08080a; */
+/*   --color-foreground: #f3f1ea; */
+/*   --color-accent: #ff3b1d; */
+/*   --color-muted: #807f78; */
+/*   --spacing-gutter: 2.5rem; */
+/*   --spacing-section: 9rem; */
+/* } */
+/*  */
+/* / * The reference remains Anton; the project lettering is available on the specimen. * / */
+/* @font-face { */
+/*   font-family: "Aarya Tall"; */
+/*   / * ORIGINAL (preserved, not deleted — disabled by comment): src: url("/fonts/aarya-tall.woff2") format("woff2"); * / */
+/*   src: url("/fonts/aarya-tall.ttf") format("truetype"); */
+/*   font-weight: 400; */
+/*   font-style: normal; */
+/*   font-display: swap; */
+/* } */
+/*  */
+/* :root { --ease-expo: cubic-bezier(.16, 1, .3, 1); } */
+/* @media (max-width: 640px) { :root { --gutter: 16px; } } */
+/* body { line-height: 1.6; } */
+/* h1, h2, h3 { font-weight: 400; } */
+/* button, a { -webkit-tap-highlight-color: transparent; } */
+/* :focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; } */
+/* .skip-link { position: fixed; top: 1rem; left: 1rem; z-index: 120; padding: .75rem 1rem; background: var(--foreground); color: var(--background); transform: translateY(-200%); } */
+/* .skip-link:focus { transform: none; } */
+/* #main-content:focus { outline: none; } */
+/* #preloader { display: none; } */
+/* .js #preloader { display: flex; } */
+/* #count { color: var(--foreground); } */
+/* #preloader.done { visibility: hidden; transition: transform .65s cubic-bezier(.22,1,.36,1), visibility 0s .65s; } */
+/* html.scroll-locked, html.scroll-locked body { overflow: hidden; } */
+/* .mobile-menu { overscroll-behavior: contain; } */
+/* .mobile-menu ul { display: grid; gap: 1.25rem; } */
+/* .mobile-menu a { padding-block: .25rem; } */
+/* .mobile-menu a:hover { color: var(--accent); } */
+/* .hero-name { line-height: .78; } */
+/* .hero-top { pointer-events: none; } */
+/* .hero-desc { transition-property: opacity, transform; } */
+/* .portrait { margin: 0; } */
+/* .portrait svg, .liquid svg { position: absolute; width: 0; height: 0; pointer-events: none; } */
+/* .portrait video { filter: var(--liquid-filter); } */
+/* .liquid { background: var(--surface); } */
+/* .liquid img, .venture:hover .liquid img { filter: var(--liquid-filter); } */
+/* .liquid:before, .liquid:after { content: none; } */
+/* .liquid-veil, .liquid-glow, .liquid-vignette, .liquid-placeholder { position: absolute; inset: 0; pointer-events: none; } */
+/* .liquid-veil { background: var(--background); mix-blend-mode: color; opacity: .88; transition: opacity .38s ease-out; } */
+/* .liquid-glow { background: linear-gradient(120deg, transparent 30%, color-mix(in srgb, var(--accent) 35%, transparent) 50%, transparent 70%); opacity: 0; transition: opacity .38s ease-out; } */
+/* .liquid-vignette { background: radial-gradient(120% 120% at 50% 120%, color-mix(in srgb, #08080a 70%, transparent), transparent 60%); } */
+/* .liquid-placeholder { display: grid; place-content: center; padding: 1rem; text-align: center; background: radial-gradient(130% 130% at 30% 15%, var(--surface-2), var(--background)); font: 400 3.25rem/1 var(--font-display); text-transform: uppercase; color: var(--muted); } */
+/* .liquid-placeholder[hidden] { display: none; } */
+/* .liquid.is-hovered .liquid-veil { opacity: 0; } */
+/* .liquid.is-hovered .liquid-glow { opacity: 1; } */
+/* .fade-up.in-view { opacity: 1; transform: translateY(0); } */
+/* .venture { transform: translateY(60px); transition-duration: .62s; } */
+/* .story-copy { transition-duration: .52s; } */
+/* .section-title, .section-head h2, .contact-title { overflow-wrap: normal; } */
+/* .reveal-line { display: block; padding-bottom: .08em; margin-bottom: -.08em; } */
+/* .reveal-line > span { transition-delay: var(--delay, 0ms); } */
+/* .principles h3, .venture h3 { line-height: 1.15; } */
+/* .venture { min-width: 0; } */
+/* .venture-copy > :first-child { min-width: 0; } */
+/* .voice-name { display: block; line-height: 1.15; } */
+/* .voice-role { display: block; line-height: 1.4; } */
+/* .voice-detail { min-width: 0; } */
+/* .voice-index { font-variant-numeric: tabular-nums; } */
+/* .voice-panel { min-width: 0; } */
+/* .quote { margin: 0; } */
+/* .quote-word { margin-right: 0; } */
+/* .quote-word span { transition-delay: var(--delay, 0ms); } */
+/* .email { line-height: .95; } */
+/* .socials a { width: fit-content; } */
+/* .footer-bar { grid-template-columns: 1fr; } */
+/* @media (min-width: 640px) { */
+/*   #impact .section-head h2, #voices .section-head h2 { font-size: 3.25rem; } */
+/* } */
+/* @media (min-width: 1024px) { */
+/*   .footer-bar { grid-template-columns: repeat(12, minmax(0, 1fr)); } */
+/* } */
+/* / * The root-grid jumps are intentional; protect narrow columns without shrinking the type. * / */
+/* @media (min-width: 1024px) and (max-width: 1200px) { */
+/*   .voice-panel { grid-template-columns: 1fr; } */
+/*   .voice-portrait { width: 12rem; order: 1; } */
+/*   .quote-wrap { order: 2; } */
+/* } */
+/* @media (max-width: 639px) { */
+/*   .hero-top { gap: 1.5rem; } */
+/*   .hero-desc { max-width: 22ch; align-self: flex-end; font-size: .8125rem; } */
+/*   .hero-name { font-size: min(13rem, 35vw); } */
+/*   .portrait { height: 70svh; width: 100vw; } */
+/*   #top { min-height: max(100svh, 48rem); } */
+/*   .venture-copy { flex-wrap: wrap; gap: 1rem; } */
+/*   .venture-meta { text-align: left; } */
+/*   .contact-title { font-size: 3.75rem; } */
+/*   .email { font-size: 1.45rem; } */
+/*   .stat dd { font-size: 6.5rem; } */
+/* } */
+/* html:not(.motion) .reveal-line > span, */
+/* html:not(.motion) .fade-up, */
+/* html:not(.motion) .role-line span, */
+/* html:not(.motion) .hero-name .letter, */
+/* html:not(.motion) .hero-desc, */
+/* html:not(.motion) .scroll-cue, */
+/* html:not(.motion) .quote-word span, */
+/* html:not(.motion) .voice-portrait { opacity: 1; transform: none; } */
+/* @media (prefers-reduced-motion: reduce) { */
+/*   #preloader, .js #preloader { display: none; } */
+/*   .marquee-track { animation: none; } */
+/*   .hero-desc { opacity: 1; transform: none; } */
+/*   .liquid img, .portrait video { filter: none; } */
+/*   .email:hover { transform: none; } */
+/* } */
+/* .stat dd, .email, .venture h3 { transition-timing-function: ease-out; } */

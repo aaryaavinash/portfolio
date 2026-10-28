@@ -1,0 +1,76 @@
+// ORIGINAL (preserved, not deleted — disabled by comment):
+// export function initLiquidImages(motion: MediaQueryList): void {
+//   const hover = matchMedia('(hover: hover) and (pointer: fine) and (min-width: 769px)');
+//   document.querySelectorAll<HTMLElement>('[data-liquid]').forEach((figure, index) => {
+//     const bare = figure.classList.contains('liquid-bare');
+//     const media = figure.querySelector<HTMLImageElement | HTMLVideoElement>('img, video')!;
+//     const id = `liquid-${index}`;
+//     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+//     svg.setAttribute('aria-hidden', 'true');
+//     svg.setAttribute('focusable', 'false');
+//     svg.innerHTML = `<defs><filter id="${id}" x="-15%" y="-15%" width="130%" height="130%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.009" numOctaves="2" seed="${index + 1}" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="1" xChannelSelector="R" yChannelSelector="G"/></filter></defs>`;
+//     figure.prepend(svg);
+//     figure.style.setProperty('--liquid-filter', `url(#${id})`);
+//     const turbulence = svg.querySelector('feTurbulence')!;
+//     const displacement = svg.querySelector('feDisplacementMap')!;
+//     if (!bare) {
+//       figure.setAttribute('role', 'img');
+//       figure.setAttribute('aria-label', media.getAttribute('alt') || 'Portfolio image');
+//       for (const name of ['veil', 'glow', 'vignette']) {
+//         const layer = document.createElement('span');
+//         layer.className = `liquid-${name}`;
+//         layer.setAttribute('aria-hidden', 'true');
+//         figure.append(layer);
+//       }
+//       const fallback = document.createElement('span');
+//       fallback.className = 'liquid-placeholder';
+//       fallback.hidden = true;
+//       fallback.setAttribute('aria-hidden', 'true');
+//       figure.append(fallback);
+//       const image = media as HTMLImageElement;
+//       const showFallback = (): void => {
+//         fallback.textContent = image.alt;
+//         fallback.hidden = false;
+//       };
+//       image.addEventListener('error', showFallback);
+//       image.addEventListener('load', () => { fallback.hidden = true; });
+//       if (image.complete && image.naturalWidth === 0) showFallback();
+//     }
+//     let position = 0;
+//     let velocity = 0;
+//     let target = 0;
+//     let previous = 0;
+//     let frame = 0;
+//     const maximum = Number(figure.dataset.liquid);
+//     function update(time: number): void {
+//       const dt = Math.min((time - previous) / 1000 || 1 / 60, 1 / 30);
+//       previous = time;
+//       // Substeps keep the tension-140 / friction-13 spring stable on slow frames.
+//       for (let i = 0; i < 2; i++) {
+//         velocity += (140 * (target - position) - 13 * velocity) * dt / 2;
+//         position += velocity * dt / 2;
+//       }
+//       displacement.setAttribute('scale', String(1 + (maximum - 1) * position));
+//       turbulence.setAttribute('baseFrequency', String(Math.max(.001, .009 + .013 * position)));
+//       if (Math.abs(target - position) > .0005 || Math.abs(velocity) > .0005) frame = requestAnimationFrame(update);
+//       else { frame = 0; position = target; velocity = 0; }
+//     }
+//     function setHover(active: boolean): void {
+//       target = active && hover.matches && !motion.matches ? 1 : 0;
+//       figure.classList.toggle('is-hovered', target === 1);
+//       if (!frame) { previous = performance.now(); frame = requestAnimationFrame(update); }
+//     }
+//     const surface = bare ? media : figure;
+//     surface.addEventListener('pointerenter', () => setHover(true));
+//     surface.addEventListener('pointerleave', () => setHover(false));
+//     const reset = (): void => {
+//       cancelAnimationFrame(frame);
+//       frame = 0; position = 0; velocity = 0; target = 0;
+//       figure.classList.remove('is-hovered');
+//       displacement.setAttribute('scale', '1');
+//       turbulence.setAttribute('baseFrequency', '.009');
+//     };
+//     motion.addEventListener('change', reset);
+//     hover.addEventListener('change', reset);
+//   });
+// }

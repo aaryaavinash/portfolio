@@ -1,0 +1,10 @@
+{
+  "name": "Aarya Avinash",
+  "short_name": "Aarya",
+  "description": "Developer, founder, and creator portfolio",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#08080a",
+  "theme_color": "#08080a",
+  "icons": [{ "src": "/favicon-48.png", "sizes": "48x48", "type": "image/png" }, { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }]
+}

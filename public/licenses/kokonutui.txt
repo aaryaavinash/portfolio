@@ -1,0 +1,3 @@
+CardFlip, ActivityTerrain, and NowPlaying components come from Kokonut UI by @dorianbaffier.
+https://github.com/kokonut-labs/kokonutui
+License: MIT, as stated in the component source headers. The local imports and wrappers are adapted for this Vite project.

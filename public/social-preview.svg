@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#08080a"/><stop offset="1" stop-color="#21100f"/></linearGradient></defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <path d="M56 56h1088v518H56z" fill="none" stroke="#f3f1ea" stroke-opacity=".18"/>
+  <circle cx="1040" cy="165" r="80" fill="none" stroke="#ff3b1d" stroke-width="2"/>
+  <path d="M1011 194 1030 137h17l20 57h-14l-5-15h-20l-5 15Zm21-26h12l-6-19Z" fill="#ff3b1d"/>
+  <text x="88" y="168" fill="#807f78" font-family="Arial,sans-serif" font-size="24" font-weight="700" letter-spacing="7">DEVELOPER · FOUNDER · CREATOR</text>
+  <text x="84" y="365" fill="#f3f1ea" font-family="Impact,Arial Narrow,Arial,sans-serif" font-size="152" font-weight="900" letter-spacing="-5">AARYA</text>
+  <text x="84" y="516" fill="#ff3b1d" font-family="Impact,Arial Narrow,Arial,sans-serif" font-size="152" font-weight="900" letter-spacing="-5">AVINASH</text>
+  <path d="M88 548h1015" stroke="#f3f1ea" stroke-opacity=".18"/>
+</svg>

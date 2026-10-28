@@ -1,0 +1,55 @@
+// ORIGINAL (preserved, not deleted — disabled by comment): src/personal.tsx
+// import { createRoot } from 'react-dom/client';
+// import { useState } from 'react';
+// import CardFlip from './components/CardFlip';
+// import NowPlaying from './components/NowPlaying';
+// import TearTicket from './components/TearTicket';
+// 
+// function PersonalPieces() {
+//   const [torn, setTorn] = useState(false);
+//   return <div className="personal-stack">
+//     <div className="personal-piece" id="play">
+//       <div className="personal-copy"><div className="eyebrow">Play / 01</div><h3>Off the clock</h3><p>Flick the card to see what I play. Minecraft, CODM, BGMI, Free Fire, GTA V, CS2, and chess are all in the mix.</p></div>
+//       <div className="personal-stage"><CardFlip
+//         label="Aarya's gaming interests"
+//         className="gaming-card"
+//         faceClassName="!rounded-sm !border-[#45403d] !bg-[#17171b] !text-[#f3f1ea]"
+//         front={<div className="gaming-face"><span>PLAYER ONE</span><strong>GAMES<br />&amp; CHESS</strong><small>DRAG OR TAP TO FLIP ↗</small></div>}
+//         back={<div className="gaming-face gaming-back"><span>ON MY LIST</span><strong>Minecraft<br />CODM · BGMI<br />Free Fire<br />GTA V · CS2<br />Chess</strong><small>KEEP PLAYING</small></div>}
+//       /></div>
+//     </div>
+//     <div className="personal-piece" id="music">
+//       <div className="personal-copy"><div className="eyebrow">Music / 02</div><h3>On the record</h3><p>My Last.fm account is coming later. This music card is a visual preview—there is no live track or audio playback yet.</p></div>
+//       <div className="personal-stage"><NowPlaying
+//         className="music-preview"
+//         tracks={[{ title: 'Last.fm soon', artist: 'Music space preview', duration: 180, artwork: 1 }]}
+//         autoPlay={false}
+//         accent="#ff3b1d"
+//       /></div>
+//     </div>
+//     <div className="personal-piece" id="connect">
+//       <div className="personal-copy"><div className="eyebrow">Connect / 03</div><h3>Start a conversation</h3><p>Tear the ticket, or write to me directly. The email link stays available either way.</p><a className="personal-mail" href="mailto:hello@aaya.cyou">hello@aaya.cyou ↗</a></div>
+//       <div className="personal-stage"><TearTicket
+//         width={460}
+//         height={250}
+//         stubSize={145}
+//         background="#17171b"
+//         color="#f3f1ea"
+//         rotate={0}
+//         image="/images/portfolio.svg"
+//         imageAlt="Abstract AA portfolio artwork"
+//         ariaLabel="Tear the contact ticket"
+//         onTear={() => setTorn(true)}
+//         className="contact-ticket"
+//         stub={<div className="ticket-stub"><span>ADMIT ONE</span><strong>PULL<br />TO<br />CONNECT</strong><small>AA / 2026</small></div>}
+//       ><div className="ticket-body"><span>AARYA AVINASH</span><strong>LET'S<br />BUILD.</strong><a href="mailto:hello@aaya.cyou">hello@aaya.cyou ↗</a></div></TearTicket>
+//       <p className="ticket-note" aria-live="polite">{torn ? 'Ticket torn. The email link is ready.' : 'The email link is always available.'}</p></div>
+//     </div>
+//   </div>;
+// }
+// 
+// export function mountPersonal(container: HTMLElement): () => void {
+//   const root = createRoot(container);
+//   root.render(<PersonalPieces />);
+//   return () => root.unmount();
+// }
