@@ -71,6 +71,8 @@ Mail to `hello@aarya.cyou` is forwarded by Cloudflare Email Routing to Aarya’s
 | `tools/` | Focused checks and Aarya Tall font generator |
 | `.codex/` | Product, design, typography, animation, and implementation notes |
 
+The [SEO pass](./.codex/seo.md) records the crawl, metadata, and structured-data changes for the live domain.
+
 ## Licensing
 
 The repository contains four different rights scopes. They are deliberately separate: permission to reuse code does not grant permission to copy personal content, brands, or third-party components.
