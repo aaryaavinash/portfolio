@@ -1,28 +1,90 @@
-# Aarya Avinash portfolio
+<p align="center">
+  <a href="https://aarya.cyou/">
+    <img src="./public/banner.svg" alt="Aarya Avinash — developer, founder, creator" width="100%">
+  </a>
+</p>
 
-A personal portfolio built with Vite, TypeScript, Tailwind CSS, GSAP ScrollTrigger, Lenis, and lazy React islands. The cinematic layout is inspired by the Marcus Vane reference; the visible content is about Aarya.
+<h1 align="center">Aarya Avinash</h1>
 
-```sh
+<p align="center">
+  Developer · Founder of <a href="https://github.com/zyrixdevs">Zyrix Dev</a> · Creator
+</p>
+
+<p align="center">
+  <a href="https://aarya.cyou/">Live portfolio</a> ·
+  <a href="https://github.com/aaryaavinash">GitHub</a> ·
+  <a href="https://www.instagram.com/aaryaavinash_/">Instagram</a> ·
+  <a href="https://dev.zyrix.qzz.io/">Zyrix Dev</a>
+</p>
+
+---
+
+## About this project
+
+This is my personal space on the web. It brings together software, design, trading interests, games, and the work I am building as a student and founder of Zyrix Dev. The visual direction is cinematic and typographic, with motion that responds to scroll and respects reduced-motion preferences.
+
+The portfolio includes selected projects, a GitHub activity view, an interactive gaming card, a music section, social profile cards, and a contact ticket. Public GitHub data is fetched live. Music uses public Last.fm scrobbles when available; the record card is a display, not an audio player. Instagram and Discord cards show confirmed profile details without invented live metrics.
+
+## Built with
+
+| Layer | Technology |
+| --- | --- |
+| App | Vite, TypeScript, React islands |
+| Interface | Tailwind CSS, custom CSS, Anton, Onest, Aarya Tall prototype |
+| Motion | GSAP, ScrollTrigger, Lenis, Motion |
+| Interactive components | React Bits and Kokonut UI adaptations |
+| Hosting and data | Cloudflare Pages Functions, public GitHub and Last.fm feeds |
+
+## Run locally
+
+```bash
+git clone https://github.com/aaryaavinash/portfolio.git
+cd portfolio
 npm ci
 npm run dev
 ```
 
-<!-- ORIGINAL (preserved, not deleted — disabled by comment): `npm run build` typechecks and produces `dist/`. `npm run preview` serves the build. Focused checks: `node tools/check-voices.mjs`, `node tools/check-contributions.mjs`, and `node tools/check-social.mjs`. -->
-<!-- ORIGINAL (preserved, not deleted — disabled by comment): `npm run build` typechecks and produces `dist/`. `npm run preview` serves the build. Focused checks: `node tools/check-voices.mjs`, `node tools/check-contributions.mjs`, `node tools/check-social.mjs`, and `node tools/check-lastfm.mjs`. -->
-`npm run build` typechecks and produces `dist/`. `npm run preview` serves the static build. Focused checks include `node tools/check-music.mjs`, `node tools/check-lastfm.mjs`, `node tools/check-voices.mjs`, `node tools/check-contributions.mjs`, and `node tools/check-social.mjs`.
+Open the URL printed by Vite. For a production build:
 
-The page presents Aarya as a student, developer, founder of [Zyrix Dev](https://dev.zyrix.qzz.io), video editor, graphic designer, forex/crypto trader, and gamer. Featured work links to [Aequarch Esports](https://github.com/aaryaavinash/Aequarch-Esports) and Zyrix Dev. Contact: `hello@aaya.cyou`.
+```bash
+npm run build
+npm run preview
+```
 
-<!-- ORIGINAL (preserved, not deleted — disabled by comment): Play, Music, and Connect have separate full-size scenes. The gaming flip card is a large game pass. Music includes a recent-listening layout, but no Last.fm history is displayed until Aarya provides an account or real songs; the player is a labeled visual preview with no audio. The social section has Instagram, GitHub, and Discord-inspired cards. GitHub public counts load from the official API. Instagram and Discord live metrics need authorized integrations, so those cards show confirmed profile details without invented data. The GitHub activity terrain uses a public contribution feed with a clear fallback. -->
-<!-- ORIGINAL (preserved, not deleted — disabled by comment): Play, Music, and Connect have separate full-size scenes. The gaming flip card is a large game pass. Music checks Aarya's public Last.fm profile for its latest scrobble every two minutes while the page is visible; the profile currently has no public tracks, and the player remains a labeled visual preview with no audio. A full recent-track list needs Last.fm API access. The social section has Instagram, GitHub, and Discord-inspired cards. GitHub public counts load from the official API. Instagram and Discord live metrics need authorized integrations, so those cards show confirmed profile details without invented data. The GitHub activity terrain uses a public contribution feed with a clear fallback. -->
-Play, Music, and Connect have separate full-size scenes. The gaming flip card is a large game pass. Music shows the latest Last.fm scrobble and up to five previous tracks through `functions/api/music.ts` on Cloudflare Pages. The record card is display only: it does not stream audio or offer fake playback controls. In plain Vite preview it falls back to the latest-track widget, without the history list. The social section has Instagram, GitHub, and Discord-inspired cards. GitHub public counts load from the official API. Instagram and Discord live metrics need authorized integrations, so those cards show confirmed profile details without invented data. The GitHub activity terrain uses a public contribution feed with a clear fallback.
+The build includes TypeScript checking. Focused data checks are in `tools/check-*.mjs`; for example, `node tools/check-music.mjs`.
 
-## Spotify listening on Cloudflare Pages
+## Deployment and live data
 
-Spotify's development Web API requires the app owner to have Premium, so this site uses [Last.fm's Spotify scrobbling connection](https://www.last.fm/about/trackmymusic). Aarya must sign in to [Last.fm application settings](https://www.last.fm/settings/applications) and connect Spotify. Once songs appear publicly on `aaryaavinash`, the site updates automatically. It currently reports zero public scrobbles.
+The [live site](https://aarya.cyou/) runs on Cloudflare Pages from this repository's `main` branch. Use `npm run build` as the build command and `dist` as the output directory. The root `functions/api/music.ts` provides `/api/music` on Pages; a plain Vite preview falls back to the latest public Last.fm widget and cannot show the full history feed.
 
-Set the Cloudflare Pages project root to this `portfolio` directory, build command to `npm run build`, and output directory to `dist`. The root `functions/api/music.ts` is the same-origin `/api/music` endpoint; `wrangler.jsonc` records the build output and compatibility date. For local Pages testing, run `npm run build` then `wrangler pages dev dist`. The endpoint reads the open-source Last.fm Last Played widget for the latest track and the public xiffy RSS feed for history; both are external services, so it returns an honest unavailable state if they fail. No Spotify credential or API key is stored in the frontend.
+Spotify listening is displayed through [Last.fm's Spotify connection](https://www.last.fm/about/trackmymusic), with no Spotify secret in the frontend. The Last.fm profile must have public scrobbles before tracks can appear. <!-- ORIGINAL (preserved, not deleted — disabled by comment): The contact address `hello@aarya.cyou` is shown in the site source; Cloudflare Email Routing must be enabled before it can receive mail. -->
+The planned contact address is `hello@aarya.cyou`; Cloudflare Email Routing must be enabled before it can receive mail.
 
-The browser tab, favicon, touch icon, and share image are in `index.html` and `public/`. Set an absolute `og:image` URL after the final portfolio domain is known so social crawlers can fetch the share image reliably.
+## Project map
 
-Working brief and design notes: [.codex/README.md](.codex/README.md), [.codex/prompt.md](.codex/prompt.md), [.codex/design.md](.codex/design.md), [.codex/animation.md](.codex/animation.md), and [.codex/verification.md](.codex/verification.md). Original source before each major pass is preserved as disabled comments in `.codex/archive/`. Component licenses are in `public/licenses/`.
+| Path | Purpose |
+| --- | --- |
+| `index.html`, `src/` | Page structure, styles, motion, React islands |
+| `functions/api/music.ts` | Cloudflare Pages music endpoint |
+| `public/` | Favicon, banner, project artwork, fonts, share image |
+| `tools/` | Focused checks and Aarya Tall font generator |
+| `.codex/` | Product, design, typography, animation, and implementation notes |
+
+## Licensing
+
+The repository contains four different rights scopes. They are deliberately separate: permission to reuse code does not grant permission to copy personal content, brands, or third-party components.
+
+| Scope | Terms |
+| --- | --- |
+| Original project code | [MIT License](./LICENSE) |
+| My personal copy and portfolio artwork | [Portfolio content notice](./LICENSE-PORTFOLIO.md) |
+| Zyrix Dev name and brand material | [Zyrix Dev brand notice](./LICENSE-ZYRIXDEV.md) |
+| Components, animation library, fonts, and other dependencies | [Third-party license notices](./THIRD-PARTY-NOTICES.md) |
+
+The Aarya Tall font has its own [MIT notice](./public/fonts/FONT-LICENSE.txt). Credits for adapted components remain in [React Bits](./public/licenses/react-bits.txt) and [Kokonut UI](./public/licenses/kokonutui.txt) notices.
+
+---
+
+<p align="center"><sub>Designed and built with curiosity by Aarya Avinash.</sub></p>
+
+<!-- ORIGINAL (preserved, not deleted — disabled by comment): The previous README is retained verbatim in .codex/archive/before-readme-refresh/README.md.txt. -->
