@@ -12,11 +12,11 @@ The gaming card is larger and redesigned as a game pass. Music has a recent-list
 
 # Expanded personal direction — 2026-10-28
 
-The live page now includes user-supplied identity: student, developer, founder of Zyrix Dev, video editor, graphic designer, forex/crypto trader, and gamer. Confirmed links are Instagram `aaryaavinash_`, Discord handle `aaryaavinash`, Guns.lol, GitHub, Zyrix Dev site/org, and `hello@aaya.cyou`. Threads and Last.fm are not yet created. GitHub contributions are live via a public feed; the music component is a labeled preview. CardFlip, NowPlaying, ActivityTerrain, and TearTicket are integrated as lazy React islands. Older notes below are historical.
+The live page now includes user-supplied identity: student, developer, founder of Zyrix Dev, video editor, graphic designer, forex/crypto trader, and gamer. Confirmed links are Instagram `aaryaavinash_`, Discord handle `aaryaavinash`, Guns.lol, GitHub, Zyrix Dev site/org, and `hello@aarya.cyou`. Threads and Last.fm are not yet created. GitHub contributions are live via a public feed; the music component is a labeled preview. CardFlip, NowPlaying, ActivityTerrain, and TearTicket are integrated as lazy React islands. Older notes below are historical.
 
 # Current personalized direction — 2026-10-28
 
-The live page now represents Aarya Avinash. GitHub: `aaryaavinash`; public contact: `hello@aaya.cyou`. The reference layout and motion remain, while fictional Marcus biography, companies, exits, testimonials, image assets, and social destinations have been removed from the live page. Historical implementation notes below are preserved for provenance. Current source and README take precedence.
+The live page now represents Aarya Avinash. GitHub: `aaryaavinash`; public contact: `hello@aarya.cyou`. The reference layout and motion remain, while fictional Marcus biography, companies, exits, testimonials, image assets, and social destinations have been removed from the live page. Historical implementation notes below are preserved for provenance. Current source and README take precedence.
 
 # Aarya Avinash portfolio — working brief
 

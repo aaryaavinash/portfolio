@@ -20,7 +20,7 @@ The portfolio must present Aarya's self-described roles and interests accurately
 
 # Current product requirements — Aarya portfolio
 
-Present Aarya as a web developer and builder without fabricated biography. Feature the verified original GitHub repository Aequarch Esports and this in-progress portfolio. Show a clearly dated GitHub snapshot (2 public repositories, 1 original, 1 fork, account since 2023) with a link to current GitHub data. Use Aarya's public GitHub photo, local illustrative project artwork, the supplied `hello@aaya.cyou` address, and only verified GitHub/Instagram links. Replace testimonials with an interactive focus selector. Preserve GSAP, ScrollTrigger, Lenis, React Bits AnimatedContent and Counter, responsive layout, and reduced-motion behavior.
+Present Aarya as a web developer and builder without fabricated biography. Feature the verified original GitHub repository Aequarch Esports and this in-progress portfolio. Show a clearly dated GitHub snapshot (2 public repositories, 1 original, 1 fork, account since 2023) with a link to current GitHub data. Use Aarya's public GitHub photo, local illustrative project artwork, the supplied `hello@aarya.cyou` address, and only verified GitHub/Instagram links. Replace testimonials with an interactive focus selector. Preserve GSAP, ScrollTrigger, Lenis, React Bits AnimatedContent and Counter, responsive layout, and reduced-motion behavior.
 
 The Marcus Vane requirements below describe the earlier reference phase and are superseded for live content.
 

@@ -69,7 +69,7 @@ function PersonalPieces() {
       <LastFmMusic />
     </div>
     <div className="personal-piece" id="connect">
-      <div className="personal-copy"><div className="eyebrow">Connect / 03</div><h3>Start a conversation</h3><p>Tear the ticket, or write to me directly. The email link stays available either way.</p><a className="personal-mail" href="mailto:hello@aaya.cyou">hello@aaya.cyou ↗</a></div>
+      <div className="personal-copy"><div className="eyebrow">Connect / 03</div><h3>Start a conversation</h3><p>Tear the ticket, or write to me directly. The email link stays available either way.</p>{/* ORIGINAL (preserved, not deleted — disabled by comment): <a className="personal-mail" href="mailto:hello@aaya.cyou">hello@aaya.cyou ↗</a> */}<a className="personal-mail" href="mailto:hello@aarya.cyou">hello@aarya.cyou ↗</a></div>
       <div className="personal-stage"><TearTicket
         width={460}
         height={250}
@@ -83,7 +83,7 @@ function PersonalPieces() {
         onTear={() => setTorn(true)}
         className="contact-ticket"
         stub={<div className="ticket-stub"><span>ADMIT ONE</span><strong>PULL<br />TO<br />CONNECT</strong><small>AA / 2026</small></div>}
-      ><div className="ticket-body"><span>AARYA AVINASH</span><strong>LET'S<br />BUILD.</strong><a href="mailto:hello@aaya.cyou">hello@aaya.cyou ↗</a></div></TearTicket>
+      ><div className="ticket-body"><span>AARYA AVINASH</span><strong>LET'S<br />BUILD.</strong>{/* ORIGINAL (preserved, not deleted — disabled by comment): <a href="mailto:hello@aaya.cyou">hello@aaya.cyou ↗</a> */}<a href="mailto:hello@aarya.cyou">hello@aarya.cyou ↗</a></div></TearTicket>
       <p className="ticket-note" aria-live="polite">{torn ? 'Ticket torn. The email link is ready.' : 'The email link is always available.'}</p></div>
     </div>
   </div>;

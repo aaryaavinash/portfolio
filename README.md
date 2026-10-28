@@ -58,7 +58,8 @@ The build includes TypeScript checking. Focused data checks are in `tools/check-
 The [live site](https://aarya.cyou/) runs on Cloudflare Pages from this repository's `main` branch. Use `npm run build` as the build command and `dist` as the output directory. The root `functions/api/music.ts` provides `/api/music` on Pages; a plain Vite preview falls back to the latest public Last.fm widget and cannot show the full history feed.
 
 Spotify listening is displayed through [Last.fm's Spotify connection](https://www.last.fm/about/trackmymusic), with no Spotify secret in the frontend. The Last.fm profile must have public scrobbles before tracks can appear. <!-- ORIGINAL (preserved, not deleted — disabled by comment): The contact address `hello@aarya.cyou` is shown in the site source; Cloudflare Email Routing must be enabled before it can receive mail. -->
-The planned contact address is `hello@aarya.cyou`; Cloudflare Email Routing must be enabled before it can receive mail.
+<!-- ORIGINAL (preserved, not deleted — disabled by comment): The planned contact address is `hello@aarya.cyou`; Cloudflare Email Routing must be enabled before it can receive mail. -->
+Mail to `hello@aarya.cyou` is forwarded by Cloudflare Email Routing to Aarya’s verified inbox.
 
 ## Project map
 
