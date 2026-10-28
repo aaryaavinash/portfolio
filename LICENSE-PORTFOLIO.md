@@ -15,3 +15,8 @@ For other reuse of these materials, ask Aarya for written permission.
 This notice does not claim ownership of third-party code, fonts, component
 designs, platform names, linked projects, or user-generated data. Original
 source code is licensed separately under [MIT](./LICENSE).
+
+The original project code grant in [MIT](./LICENSE) applies only to code
+authored for this portfolio. It does not replace the separate terms for
+personal content, brand material, third-party components, dependencies, or
+fonts identified in the repository.
