@@ -16,12 +16,45 @@ function ImpactStats() {
   const [failed, setFailed] = useState(false);
   useEffect(() => {
     const controller = new AbortController();
-    fetch('/api/github-snapshot', { signal: controller.signal })
-      .then(response => { if (!response.ok) throw new Error('GitHub snapshot unavailable'); return response.json(); })
-      .then(value => {
-        if (!value || !Number.isInteger(value.publicRepos) || !Number.isInteger(value.originals) || !Number.isInteger(value.forks) || !Number.isInteger(value.since)) throw new Error('Invalid GitHub snapshot');
-        setStats(value);
-      })
+    const signal = controller.signal;
+    async function loadSnapshot(): Promise<typeof initialStats> {
+      const response = await fetch('/api/github-snapshot', { signal });
+      if (response.ok) {
+        const value: unknown = await response.json();
+        if (value && typeof value === 'object' && ['publicRepos', 'originals', 'forks', 'since'].every(key => Number.isInteger((value as Record<string, unknown>)[key]))) return value as typeof initialStats;
+        throw new Error('Invalid GitHub snapshot');
+      }
+      const headers = { Accept: 'application/vnd.github+json' };
+      const [profileResponse, reposResponse] = await Promise.all([
+        fetch('https://api.github.com/users/aaryaavinash', { headers, signal }),
+        fetch('https://api.github.com/users/aaryaavinash/repos?per_page=100&page=1', { headers, signal }),
+      ]);
+      if (!profileResponse.ok || !reposResponse.ok) throw new Error('GitHub snapshot unavailable');
+      const profile: unknown = await profileResponse.json();
+      const repos: unknown[] = await reposResponse.json();
+      if (!Array.isArray(repos) || repos.some(repo => !repo || typeof repo !== 'object' || typeof (repo as Record<string, unknown>).fork !== 'boolean')) throw new Error('Invalid GitHub repositories');
+      let next = reposResponse.headers.get('Link')?.match(/<([^>]+)>;\s*rel="next"/)?.[1];
+      while (next) {
+        const pageResponse = await fetch(next, { headers, signal });
+        if (!pageResponse.ok) throw new Error('GitHub repositories unavailable');
+        const page: unknown = await pageResponse.json();
+        if (!Array.isArray(page) || page.some(repo => !repo || typeof repo !== 'object' || typeof (repo as Record<string, unknown>).fork !== 'boolean')) throw new Error('Invalid GitHub repositories');
+        repos.push(...page);
+        next = pageResponse.headers.get('Link')?.match(/<([^>]+)>;\s*rel="next"/)?.[1];
+      }
+      if (!profile || typeof profile !== 'object') throw new Error('Invalid GitHub profile');
+      const data = profile as Record<string, unknown>;
+      const since = typeof data.created_at === 'string' ? Date.parse(data.created_at) : NaN;
+      if (!Number.isInteger(data.public_repos) || !Number.isFinite(since)) throw new Error('Invalid GitHub profile');
+      return {
+        publicRepos: data.public_repos as number,
+        originals: repos.filter(repo => !(repo as { fork: boolean }).fork).length,
+        forks: repos.filter(repo => (repo as { fork: boolean }).fork).length,
+        since: new Date(since).getFullYear(),
+      };
+    }
+    loadSnapshot()
+      .then(setStats)
       .catch(error => { if (!controller.signal.aborted) console.error(error); });
     fetch('https://github-contributions-api.jogruber.de/v4/aaryaavinash?y=last', { signal: controller.signal })
       .then(response => { if (!response.ok) throw new Error('Contribution feed unavailable'); return response.json(); })
