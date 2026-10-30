@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { initLiquidImages } from './liquid';
 import { initVoices } from './voices';
 import { initAmbient } from './ambient';
+import { initContact } from './contact';
 
 gsap.registerPlugin(ScrollTrigger);
 const root = document.documentElement;
@@ -15,6 +16,7 @@ root.classList.toggle('motion', !motion.matches);
 
 const lenis = new Lenis({ smoothWheel: !motion.matches, lerp: .1, autoRaf: false });
 const ambient = initAmbient(document.querySelector<HTMLCanvasElement>('#ambient-canvas')!, motion);
+const disposeContact = initContact(motion);
 const onAmbientScroll = () => ambient?.setScroll(lenis.scroll);
 lenis.on('scroll', onAmbientScroll);
 const tick = (time: number): void => { lenis.raf(time * 1000); };
@@ -342,6 +344,7 @@ if (import.meta.hot) import.meta.hot.dispose(() => {
   mediaObserver.disconnect();
   railObserver.disconnect();
   disposeLiquid(); disposeVoices();
+  disposeContact();
   projectsObserver.disconnect(); disposeProjects?.();
   impactObserver.disconnect(); disposeImpact?.();
   personalObserver.disconnect(); disposePersonal?.();
