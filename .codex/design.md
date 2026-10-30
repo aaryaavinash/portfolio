@@ -101,3 +101,7 @@ Check face/name overlap at 1440×900 and 1920×1080; name baseline must melt int
 # Twenty-world project gallery — 2026-10-30
 
 The Projects chapter keeps the original two-card list as a no-JavaScript fallback. Once the gallery loads, 20 real repo screenshots appear as large editorial frames in a horizontal filmstrip. The black stage, WebGL orbital field, accent-red progress, dimmed neighboring frames, and compact captions preserve the portfolio's Anton/Onest direction. Screenshots are served from each public repository's `docs/media` file; no invented project art is used. Live project and source links are separate.
+
+# Portfolio-wide scene and loader — 2026-10-30
+
+The Alche reference informed the chapter rhythm, technical line work, and scroll-linked atmosphere. The portfolio uses its own interlocking AA line mark in the loader and one fixed procedural WebGL field behind the page. This field is visible around transparent sections and pauses while the gallery's separate scene is present. Desktop chapters gain a discreet right-side rail with active-section feedback. The original portrait, real projects, black/vermilion palette, and accessible content remain the identity anchors.

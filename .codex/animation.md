@@ -108,3 +108,7 @@ AnimatedContent wraps the four impact stats: 40px vertical travel, 1.1s power3.o
 # Projects horizontal motion — 2026-10-30
 
 At 1024px and above, GSAP ScrollTrigger pins the Projects stage and scrubs the track from first to last frame against vertical scroll distance. Lenis supplies the smoothing, so the track, progress rail, and 01–20 counter share one scroll position. The active frame scales and gains opacity. One capped-resolution WebGL canvas draws a moving orbital field behind the work while visible. It pauses when hidden or reduced motion is requested; WebGL failure leaves the CSS background. Nearby frames begin image loading as the active frame changes. Below 1024px or with reduced motion, the track becomes native horizontal scroll with snap points and no pin.
+
+## Portfolio-wide scene — 2026-10-30
+
+The intro GSAP timeline draws the original AA SVG paths during the existing count and wipe, with no extra loading delay. A separate fixed WebGL canvas renders a lightweight orbital field behind the page at capped resolution and roughly 30 draws per second. It follows Lenis scroll and mouse position, stops in hidden tabs or with reduced motion, and pauses while the Projects gallery's canvas is on screen. A narrow IntersectionObserver band marks the current chapter on the desktop rail. The page still works if WebGL is unavailable.

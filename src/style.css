@@ -501,3 +501,43 @@ header { background: linear-gradient(to bottom, rgba(8,8,10,.92), rgba(8,8,10,0)
   .project-caption h3 { font-size:clamp(1.8rem,8vw,2.6rem); }
   .project-open { opacity:1; transform:none; right:.6rem; bottom:.6rem; font-size:.6rem; }
 }
+
+/* One low-resolution field connects the page; the Projects stage keeps its own scene. */
+#ambient-canvas { position:fixed; inset:0; z-index:0; display:block; width:100vw; height:100vh; opacity:.82; pointer-events:none; }
+main { position:relative; z-index:1; }
+.personal-piece:nth-child(2) { /* ORIGINAL (preserved, not deleted — disabled by comment): background:var(--surface); */ background:transparent; }
+
+/* Original AA geometry takes the place of a borrowed loading logo. */
+#preloader { align-items:stretch; justify-content:space-between; padding:clamp(1rem,3vw,3.5rem); }
+.loader-top, .loader-bottom { position:relative; z-index:1; display:flex; justify-content:space-between; align-items:flex-start; gap:1rem; }
+.loader-top { font-size:.7rem; font-weight:600; letter-spacing:.22em; text-transform:uppercase; color:var(--muted); }
+.loader-top span:first-child { color:var(--foreground); }
+.loader-bottom { align-items:flex-end; }
+.loader-bottom .pre-brand { font-size:clamp(1.2rem,2.4vw,2rem); }
+.loader-bottom .counter { font-size:clamp(4.5rem,13vw,12rem); line-height:.8; }
+#loading-mark { position:absolute; inset:0; width:min(45vw,21rem); height:auto; aspect-ratio:1; margin:auto; overflow:visible; }
+#loading-mark .loader-orbit { stroke:rgba(243,241,234,.23); stroke-width:1; stroke-dasharray:2 9; }
+#loading-mark .draw { stroke:var(--foreground); stroke-width:3; stroke-linecap:square; stroke-linejoin:miter; }
+#loading-mark .draw:nth-of-type(2) { stroke:var(--accent); }
+#loading-mark .loader-cut { stroke:var(--muted); stroke-width:1; }
+
+.section-rail { position:fixed; z-index:40; right:clamp(.75rem,1.5vw,1.5rem); top:50%; display:none; flex-direction:column; gap:.1rem; transform:translateY(-50%); }
+.section-rail a { display:flex; align-items:center; justify-content:flex-end; gap:.6rem; min-width:2.5rem; min-height:2rem; color:var(--muted); font-size:.6rem; font-weight:600; letter-spacing:.08em; transition:color .25s ease; }
+.section-rail a span { opacity:0; transform:translateX(.35rem); transition:opacity .25s ease,transform .25s ease; }
+.section-rail a i { width:.55rem; height:1px; background:currentColor; transition:width .35s var(--ease-expo),background .25s ease; }
+.section-rail a:hover, .section-rail a.active { color:var(--foreground); }
+.section-rail a:hover span, .section-rail a.active span, .section-rail a:focus-visible span { opacity:1; transform:none; }
+.section-rail a.active i { width:1.5rem; background:var(--accent); }
+@media (min-width:1280px) { .section-rail { display:flex; } }
+@media (min-width:1024px) {
+  section.content:not(#ventures):not(#personal) { display:flex; flex-direction:column; justify-content:center; min-height:100svh; }
+  #story .section-title { font-size:clamp(4.5rem,7vw,8rem); }
+  #impact .section-head h2, #voices .section-head h2 { font-size:clamp(3.5rem,5.8vw,6.5rem); }
+  #contact .contact-title { font-size:clamp(5rem,8vw,9rem); }
+}
+@media (max-width:639px) {
+  #loading-mark { width:min(64vw,16rem); }
+  .loader-top span:last-child { display:none; }
+  .loader-bottom { align-items:flex-start; flex-direction:column; }
+}
+@media (prefers-reduced-motion:reduce) { #ambient-canvas { display:none; } }

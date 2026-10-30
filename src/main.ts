@@ -3,6 +3,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { initLiquidImages } from './liquid';
 import { initVoices } from './voices';
+import { initAmbient } from './ambient';
 
 gsap.registerPlugin(ScrollTrigger);
 const root = document.documentElement;
@@ -13,6 +14,9 @@ root.classList.add('js', 'gsap-motion');
 root.classList.toggle('motion', !motion.matches);
 
 const lenis = new Lenis({ smoothWheel: !motion.matches, lerp: .1, autoRaf: false });
+const ambient = initAmbient(document.querySelector<HTMLCanvasElement>('#ambient-canvas')!, motion);
+const onAmbientScroll = () => ambient?.setScroll(lenis.scroll);
+lenis.on('scroll', onAmbientScroll);
 const tick = (time: number): void => { lenis.raf(time * 1000); };
 lenis.on('scroll', ScrollTrigger.update);
 let tickerActive = false;
@@ -69,11 +73,18 @@ const roles = document.querySelectorAll('.role-line span');
 const description = document.querySelector('.hero-desc')!;
 const cue = document.querySelector('.scroll-cue')!;
 const intro = gsap.timeline({ paused: true });
+const markPaths = [...document.querySelectorAll<SVGGeometryElement>('#loading-mark .draw')];
+markPaths.forEach(path => {
+  const length = path.getTotalLength();
+  gsap.set(path, { strokeDasharray: length, strokeDashoffset: length });
+});
 if (!motion.matches) {
   syncScrollLock();
   scrollTo(0, 0);
   const progress = { value: 0 };
   let lastCount = -1;
+  intro.to(markPaths, { strokeDashoffset: 0, duration: 1.8, stagger: .12, ease: 'power2.inOut' }, .1)
+    .fromTo('#loading-mark', { scale: .86, opacity: .35 }, { scale: 1, opacity: 1, duration: 1.8, ease: 'expo.out' }, 0);
   intro.to(progress, { value: 100, duration: 2, ease: 'none', onUpdate: () => {
     const next = Math.round(progress.value);
     if (next !== lastCount) { counter.textContent = String(next); lastCount = next; }
@@ -132,6 +143,19 @@ document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach(link => lin
   target.setAttribute('tabindex', '-1');
   target.focus({ preventScroll: true });
 }, { signal }));
+
+const railLinks = [...document.querySelectorAll<HTMLAnchorElement>('.section-rail a')];
+const railObserver = new IntersectionObserver(entries => {
+  const current = entries.find(entry => entry.isIntersecting);
+  if (!current) return;
+  railLinks.forEach(link => {
+    const selected = link.hash === `#${current.target.id}`;
+    link.classList.toggle('active', selected);
+    if (selected) link.setAttribute('aria-current', 'location');
+    else link.removeAttribute('aria-current');
+  });
+}, { rootMargin: '-35% 0px -55% 0px' });
+railLinks.forEach(link => railObserver.observe(document.getElementById(link.hash.slice(1))!));
 
 const headings = [...document.querySelectorAll<HTMLElement>('.section-title, .section-head h2, .contact-title')];
 const headingText = new Map(headings.map(heading => [heading, [...heading.querySelectorAll('.reveal-line')].map(line => line.textContent!.trim()).join(' ')]));
@@ -315,14 +339,17 @@ if (import.meta.hot) import.meta.hot.dispose(() => {
   triggers.forEach(trigger => trigger.kill());
   revealTweens.forEach(tween => tween.kill());
   mediaObserver.disconnect();
+  railObserver.disconnect();
   disposeLiquid(); disposeVoices();
   projectsObserver.disconnect(); disposeProjects?.();
   impactObserver.disconnect(); disposeImpact?.();
   personalObserver.disconnect(); disposePersonal?.();
   socialObserver.disconnect(); disposeSocial?.();
   gsap.ticker.remove(tick);
+  lenis.off('scroll', onAmbientScroll);
   lenis.off('scroll', ScrollTrigger.update);
   lenis.destroy();
+  ambient?.dispose();
   root.classList.remove('scroll-locked');
   main.inert = false; header.inert = false;
 });
