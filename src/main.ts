@@ -212,6 +212,17 @@ headings.forEach(heading => {
 const disposeLiquid = initLiquidImages(motion);
 const disposeVoices = initVoices(motion);
 
+const projectsContainer = document.querySelector<HTMLElement>('#project-gallery')!;
+let disposeProjects: (() => void) | undefined;
+const projectsObserver = new IntersectionObserver(entries => {
+  if (!entries.some(entry => entry.isIntersecting)) return;
+  projectsObserver.disconnect();
+  void import('./projects').then(({ mountProjects }) => {
+    if (!disposed) disposeProjects = mountProjects(projectsContainer, motion);
+  }).catch(error => { console.error('Project gallery could not load; selected projects remain available.', error); });
+}, { rootMargin: '800px 0px' });
+projectsObserver.observe(document.querySelector<HTMLElement>('#ventures')!);
+
 // Keep React off the hero's startup path; static stats remain readable until the island loads.
 const impactContainer = document.querySelector<HTMLElement>('#impact-stats')!;
 let disposeImpact: (() => void) | undefined;
@@ -303,6 +314,7 @@ if (import.meta.hot) import.meta.hot.dispose(() => {
   revealTweens.forEach(tween => tween.kill());
   mediaObserver.disconnect();
   disposeLiquid(); disposeVoices();
+  projectsObserver.disconnect(); disposeProjects?.();
   impactObserver.disconnect(); disposeImpact?.();
   personalObserver.disconnect(); disposePersonal?.();
   socialObserver.disconnect(); disposeSocial?.();

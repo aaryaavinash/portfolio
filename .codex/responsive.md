@@ -43,3 +43,7 @@ The three interaction panels use 3 columns from 1280px, 2 columns from 768px (ti
 ## Three full-size scenes — 2026-10-28
 
 The old 3/2/1 interaction grid is superseded. Each panel spans viewport width and uses `min-height:100svh`. Its two columns collapse into one below 768px; content may grow taller than the viewport when needed.
+
+# Projects gallery — 2026-10-30
+
+Desktop uses a pinned viewport-height filmstrip. Below 1024px, the same 20 frames swipe horizontally with CSS scroll snap; no section pin or WebGL runs. Frames are 84vw on phones, leaving the next frame visible as a cue. Captions, direct site links, and GitHub links remain accessible by keyboard and touch.

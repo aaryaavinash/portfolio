@@ -104,3 +104,7 @@ The Lenis ticker callback is detached in hidden tabs and under reduced motion; i
 ## React Bits impact animation — 2026-10-28
 
 AnimatedContent wraps the four impact stats: 40px vertical travel, 1.1s power3.out, 0.08s child stagger, 0.1 threshold, once. Counter uses its original digit spring/intro, inherits the responsive stat size, and disables motion blur to keep four large figures light. Values are 4, $3.2B, 120M+, and 2,400. AnimatedContent now re-evaluates a GSAP media context when reduced-motion preference changes; Counter already checks that preference during its frames. Other sections retain their existing ScrollTriggers.
+
+# Projects horizontal motion — 2026-10-30
+
+At 1024px and above, GSAP ScrollTrigger pins the Projects stage and scrubs the track from first to last frame against vertical scroll distance. The active frame scales and gains opacity, while the progress rail and 01–20 counter follow the scroll. One low-resolution WebGL canvas supplies a subtle moving backdrop while visible. It pauses when hidden or reduced motion is requested; WebGL failure leaves the CSS background. Below 1024px or with reduced motion, the track becomes native horizontal scroll with snap points and no pin.

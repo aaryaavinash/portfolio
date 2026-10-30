@@ -97,3 +97,7 @@ Visible focus rings, skip link, semantic headings, real buttons/links, descripti
 ## Critique to repeat when preview is available
 
 Check face/name overlap at 1440×900 and 1920×1080; name baseline must melt into the page. Check 360×800/390×844 for reading order and clipping. Check 768, 1024, and 1440 boundaries immediately above/below. Verify 200% browser zoom. Compare line wrapping only after Google Fonts load. Do not call this pixel-matched without those observations.
+
+# Twenty-world project gallery — 2026-10-30
+
+The Projects chapter keeps the original two-card list as a no-JavaScript fallback. Once the gallery loads, 20 real repo screenshots appear as large editorial frames in a horizontal filmstrip. The black stage, accent-red progress, dimmed neighboring frames, and compact captions preserve the portfolio's Anton/Onest direction. Screenshots are served from each public repository's `docs/media` file; no invented project art is used. Live project and source links are separate.
