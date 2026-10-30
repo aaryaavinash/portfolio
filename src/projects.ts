@@ -129,10 +129,21 @@ export function mountProjects(container: HTMLElement, reduced: MediaQueryList): 
   const frames = [...container.querySelectorAll<HTMLElement>('.project-frame')];
   const count = container.querySelector<HTMLElement>('.projects-count')!;
   const meter = container.querySelector<HTMLElement>('.projects-progress span')!;
+  console.assert(frames.length === works.length, 'Project frames must match the gallery data.');
+  let activeIndex = 0;
   const update = (value: number) => {
     const index = Math.min(works.length - 1, Math.round(value * (works.length - 1)));
-    frames.forEach((frame, i) => frame.classList.toggle('is-active', i === index));
-    count.textContent = `${String(index + 1).padStart(2, '0')} / 20`;
+    // ORIGINAL (preserved, not deleted — disabled by comment): frames.forEach((frame, i) => frame.classList.toggle('is-active', i === index));
+    // ORIGINAL (preserved, not deleted — disabled by comment): count.textContent = `${String(index + 1).padStart(2, '0')} / 20`;
+    if (index !== activeIndex) {
+      frames[activeIndex].classList.remove('is-active');
+      frames[index].classList.add('is-active');
+      count.textContent = `${String(index + 1).padStart(2, '0')} / 20`;
+      activeIndex = index;
+      for (let next = Math.max(0, index - 1); next <= Math.min(index + 2, works.length - 1); next++) {
+        frames[next].querySelector('img')!.loading = 'eager';
+      }
+    }
     meter.style.transform = `scaleX(${Math.max(0.01, value)})`;
     backdrop?.(value);
   };
@@ -141,7 +152,9 @@ export function mountProjects(container: HTMLElement, reduced: MediaQueryList): 
   media.add('(min-width: 1024px) and (prefers-reduced-motion: no-preference)', () => {
     const distance = () => Math.max(0, track.scrollWidth - container.clientWidth);
     const tween = gsap.to(track, { x: () => -distance(), ease: 'none', paused: true });
-    const trigger = ScrollTrigger.create({ trigger: container, start: 'top top', end: () => `+=${distance()}`, pin: true, scrub: 1, animation: tween, invalidateOnRefresh: true, onUpdate: self => update(self.progress) });
+    // ORIGINAL (preserved, not deleted — disabled by comment): const trigger = ScrollTrigger.create({ trigger: container, start: 'top top', end: () => `+=${distance()}`, pin: true, scrub: 1, animation: tween, invalidateOnRefresh: true, onUpdate: self => update(self.progress) });
+    // Lenis already eases wheel input; a second scrub delay desynchronizes the image and counter.
+    const trigger = ScrollTrigger.create({ trigger: container, start: 'top top', end: () => `+=${distance()}`, pin: true, scrub: true, animation: tween, invalidateOnRefresh: true, onUpdate: self => update(self.progress) });
     return () => { trigger.kill(); tween.kill(); gsap.set(track, { clearProps: 'transform' }); };
   });
   const windowEl = container.querySelector<HTMLElement>('.projects-window')!;

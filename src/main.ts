@@ -24,7 +24,8 @@ function syncTicker(): void {
   else gsap.ticker.remove(tick);
 }
 syncTicker();
-gsap.ticker.lagSmoothing(0);
+// ORIGINAL (preserved, not deleted — disabled by comment): gsap.ticker.lagSmoothing(0);
+// Keep GSAP's default lag handling so returning to the tab cannot jump a scroll animation.
 
 const loader = document.querySelector<HTMLElement>('#preloader')!;
 const counter = document.querySelector('#count')!;
@@ -286,6 +287,7 @@ motion.addEventListener('change', () => {
     gsap.set([...blocks, ...document.querySelectorAll('.reveal-line > span')], { clearProps: 'transform,opacity' });
     menuAnimation.progress(menuOpen ? 1 : 0).pause();
   }
+  syncScrollLock();
   syncMedia();
 }, { signal });
 let resizeTimer: ReturnType<typeof setTimeout>;
