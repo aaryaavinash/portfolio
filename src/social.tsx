@@ -6,6 +6,7 @@ function SocialCards() {
   const [github, setGithub] = useState<GitHubCardData | null>(null);
   const [githubError, setGithubError] = useState(false);
   const [copyState, setCopyState] = useState('Copy username');
+  const [discordImageError, setDiscordImageError] = useState(false);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -38,8 +39,17 @@ function SocialCards() {
       <a className="github-visit" href="https://github.com/aaryaavinash" target="_blank" rel="noreferrer noopener">Open GitHub ↗</a>
     </article>
     <article className="social-card discord-card" aria-label="Discord profile card">
-      <div className="discord-banner"><span>DISCORD</span><span className="discord-spark" aria-hidden="true">✦</span></div>
-      <div className="discord-body"><img className="discord-avatar" src="https://avatars.githubusercontent.com/u/133252493?v=4" alt="Aarya Avinash" loading="lazy" /><h3>Aarya Avinash</h3><p className="discord-handle">aaryaavinash</p><div className="discord-divider" /><span className="discord-label">ABOUT ME</span><p>Developer, founder of Zyrix Dev, gamer, and creator.</p><div className="discord-status"><span className="discord-status-dot" /> Live presence will appear when a Discord ID is connected.</div><button type="button" onClick={copyDiscord} aria-live="polite">{copyState}</button></div>
+      {discordImageError ? <>
+        <div className="discord-banner"><span>DISCORD</span><span className="discord-spark" aria-hidden="true">✦</span></div>
+        <div className="discord-body"><img className="discord-avatar" src="https://avatars.githubusercontent.com/u/133252493?v=4" alt="Aarya Avinash" loading="lazy" /><h3>Aarya Avinash</h3><p className="discord-handle">aaryaavinash</p><div className="discord-divider" /><span className="discord-label">ABOUT ME</span><p>Developer, founder of Zyrix Dev, gamer, and creator.</p>{/* ORIGINAL (preserved, not deleted — disabled by comment): <div className="discord-status"><span className="discord-status-dot" /> Live presence will appear when a Discord ID is connected.</div> */}<div className="discord-status"><span className="discord-status-dot" /> Live Discord status is unavailable right now.</div><button type="button" onClick={copyDiscord} aria-live="polite">{copyState}</button></div>
+      </> : <div className="discord-live">
+        <div className="discord-live-heading"><span>DISCORD / LIVE PRESENCE</span><span aria-hidden="true">✦</span></div>
+        <a href="https://discord.com/users/1217420097317109821" target="_blank" rel="noreferrer noopener" aria-label="Open Aarya Avinash on Discord">
+          <img src="https://dsc-readme.tsuni.dev/api/user/1217420097317109821?banner=https%3A%2F%2Fi.pinimg.com%2Foriginals%2Fc1%2Fa1%2Fdb%2Fc1a1db513566b54bc98ee5aef7878eac.gif&theme=dark&width=512" alt="Aarya Avinash's live Discord profile and activity" loading="lazy" decoding="async" onError={() => setDiscordImageError(true)} />
+        </a>
+        <p>Live activity from Discord. Updates depend on profile visibility and the status service.</p>
+        <button type="button" onClick={copyDiscord} aria-live="polite">{copyState}</button>
+      </div>}
     </article>
   </div>;
 }
