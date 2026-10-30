@@ -131,12 +131,14 @@ function createBackdrop(canvas: HTMLCanvasElement, reduced: MediaQueryList): Bac
   } });
 }
 
-export function mountProjects(container: HTMLElement, reduced: MediaQueryList): () => void {
+// ORIGINAL (preserved, not deleted — disabled by comment): export function mountProjects(container: HTMLElement, reduced: MediaQueryList): () => void {
+export function mountProjects(container: HTMLElement, reduced: MediaQueryList, scrollTo: (top: number) => void): () => void {
   const section = container.closest<HTMLElement>('#ventures')!;
   // ORIGINAL (preserved, not deleted — disabled by comment): project screenshots were addressed as /projects/${slug}.${ext} before using each published repository's image directly.
   container.innerHTML = `<canvas class="projects-backdrop" aria-hidden="true"></canvas>
     <div class="projects-hud"><span>THE WORK / 20 WORLDS</span><span>SCROLL TO EXPLORE →</span></div>
-    <div class="projects-window"><div class="projects-track">${works.map(([slug, name, kind, ext], index) => `
+    <!-- ORIGINAL (preserved, not deleted — disabled by comment): <div class="projects-window"><div class="projects-track"> -->
+    <div class="projects-window" tabindex="0" role="region" aria-label="Project carousel"><div class="projects-track">${works.map(([slug, name, kind, ext], index) => `
       <article class="project-frame${index === 0 ? ' is-active' : ''}">
         <a class="project-shot" href="https://${slug}.aarya.cyou/" target="_blank" rel="noreferrer noopener" aria-label="Explore ${name}">
           <img src="https://raw.githubusercontent.com/aaryaavinash/${slug}/main/docs/media/${slug}.${ext}" alt="${name} website preview" width="1280" height="800" loading="${index < 2 ? 'eager' : 'lazy'}" decoding="async">
@@ -145,7 +147,8 @@ export function mountProjects(container: HTMLElement, reduced: MediaQueryList): 
         <div class="project-caption"><div><span>${String(index + 1).padStart(2, '0')} / 20 · ${kind}</span><h3>${name}</h3></div>
           <a href="https://github.com/aaryaavinash/${slug}" target="_blank" rel="noreferrer noopener" aria-label="View ${name} source code on GitHub">GITHUB ↗</a></div>
       </article>`).join('')}</div></div>
-    <div class="projects-footer"><span class="projects-count">01 / 20</span><div class="projects-progress" aria-hidden="true"><span></span></div><a href="https://github.com/aaryaavinash?tab=repositories" target="_blank" rel="noreferrer noopener">ALL REPOSITORIES ↗</a></div>`;
+    <!-- ORIGINAL (preserved, not deleted — disabled by comment): <div class="projects-footer"><span class="projects-count">01 / 20</span><div class="projects-progress" aria-hidden="true"><span></span></div><a href="https://github.com/aaryaavinash?tab=repositories" target="_blank" rel="noreferrer noopener">ALL REPOSITORIES ↗</a></div> -->
+    <div class="projects-footer"><span class="projects-count">01 / 20</span><div class="projects-progress" aria-hidden="true"><span></span></div><div class="projects-controls"><button type="button" data-project-prev aria-label="Previous project">←</button><button type="button" data-project-next aria-label="Next project">→</button></div><a href="https://github.com/aaryaavinash?tab=repositories" target="_blank" rel="noreferrer noopener">ALL REPOSITORIES ↗</a></div>`;
   container.hidden = false;
   section.classList.add('projects-enhanced');
   section.querySelector<HTMLElement>('.section-meta')!.textContent = '20 / Projects';
@@ -153,6 +156,9 @@ export function mountProjects(container: HTMLElement, reduced: MediaQueryList): 
   const frames = [...container.querySelectorAll<HTMLElement>('.project-frame')];
   const count = container.querySelector<HTMLElement>('.projects-count')!;
   const meter = container.querySelector<HTMLElement>('.projects-progress span')!;
+  const prev = container.querySelector<HTMLButtonElement>('[data-project-prev]')!;
+  const next = container.querySelector<HTMLButtonElement>('[data-project-next]')!;
+  prev.disabled = true;
   console.assert(frames.length === works.length, 'Project frames must match the gallery data.');
   let activeIndex = 0;
   const update = (value: number) => {
@@ -164,6 +170,8 @@ export function mountProjects(container: HTMLElement, reduced: MediaQueryList): 
       frames[index].classList.add('is-active');
       count.textContent = `${String(index + 1).padStart(2, '0')} / 20`;
       activeIndex = index;
+      prev.disabled = index === 0;
+      next.disabled = index === works.length - 1;
       for (let next = Math.max(0, index - 1); next <= Math.min(index + 2, works.length - 1); next++) {
         frames[next].querySelector('img')!.loading = 'eager';
       }
@@ -173,20 +181,52 @@ export function mountProjects(container: HTMLElement, reduced: MediaQueryList): 
   };
   const backdrop = createBackdrop(container.querySelector('canvas')!, reduced);
   const media = gsap.matchMedia();
+  let trigger: ScrollTrigger | undefined;
   media.add('(min-width: 1024px) and (prefers-reduced-motion: no-preference)', () => {
     const distance = () => Math.max(0, track.scrollWidth - container.clientWidth);
     const tween = gsap.to(track, { x: () => -distance(), ease: 'none', paused: true });
     // ORIGINAL (preserved, not deleted — disabled by comment): const trigger = ScrollTrigger.create({ trigger: container, start: 'top top', end: () => `+=${distance()}`, pin: true, scrub: 1, animation: tween, invalidateOnRefresh: true, onUpdate: self => update(self.progress) });
     // Lenis already eases wheel input; a second scrub delay desynchronizes the image and counter.
-    const trigger = ScrollTrigger.create({ trigger: container, start: 'top top', end: () => `+=${distance()}`, pin: true, scrub: true, animation: tween, invalidateOnRefresh: true, onUpdate: self => update(self.progress) });
-    return () => { trigger.kill(); tween.kill(); gsap.set(track, { clearProps: 'transform' }); };
+    // ORIGINAL (preserved, not deleted — disabled by comment): const trigger = ScrollTrigger.create({ trigger: container, start: 'top top', end: () => `+=${distance()}`, pin: true, scrub: true, animation: tween, invalidateOnRefresh: true, onUpdate: self => update(self.progress) });
+    trigger = ScrollTrigger.create({ trigger: container, start: 'top top', end: () => `+=${distance()}`, pin: true, scrub: true, animation: tween, invalidateOnRefresh: true, onUpdate: self => update(self.progress) });
+    // ORIGINAL (preserved, not deleted — disabled by comment): return () => { trigger.kill(); tween.kill(); gsap.set(track, { clearProps: 'transform' }); };
+    return () => { trigger?.kill(); trigger = undefined; tween.kill(); gsap.set(track, { clearProps: 'transform' }); };
   });
   const windowEl = container.querySelector<HTMLElement>('.projects-window')!;
+  const goTo = (index: number) => {
+    const next = Math.max(0, Math.min(works.length - 1, index));
+    if (trigger) {
+      scrollTo(trigger.start + (trigger.end - trigger.start) * next / (works.length - 1));
+      return;
+    }
+    const frame = frames[next];
+    const left = frame.getBoundingClientRect().left - windowEl.getBoundingClientRect().left + windowEl.scrollLeft - (windowEl.clientWidth - frame.clientWidth) / 2;
+    windowEl.scrollTo({ left, behavior: reduced.matches ? 'instant' : 'smooth' });
+  };
+  // ORIGINAL (preserved, not deleted — disabled by comment): const prev = container.querySelector<HTMLButtonElement>('[data-project-prev]')!; const next = container.querySelector<HTMLButtonElement>('[data-project-next]')!; prev.disabled = true;
+  const onPrev = () => goTo(activeIndex - 1);
+  const onNext = () => goTo(activeIndex + 1);
+  const onKey = (event: KeyboardEvent) => {
+    if (event.key === 'ArrowLeft') { event.preventDefault(); onPrev(); }
+    if (event.key === 'ArrowRight') { event.preventDefault(); onNext(); }
+    if (event.key === 'Home') { event.preventDefault(); goTo(0); }
+    if (event.key === 'End') { event.preventDefault(); goTo(works.length - 1); }
+  };
+  prev.addEventListener('click', onPrev);
+  next.addEventListener('click', onNext);
+  windowEl.addEventListener('keydown', onKey);
+  let scrollFrame = 0;
   const onScroll = () => {
     if (innerWidth >= 1024 && !reduced.matches) return;
-    update(windowEl.scrollLeft / Math.max(1, windowEl.scrollWidth - windowEl.clientWidth));
+    // ORIGINAL (preserved, not deleted — disabled by comment): update(windowEl.scrollLeft / Math.max(1, windowEl.scrollWidth - windowEl.clientWidth));
+    if (scrollFrame) return;
+    scrollFrame = requestAnimationFrame(() => {
+      scrollFrame = 0;
+      update(windowEl.scrollLeft / Math.max(1, windowEl.scrollWidth - windowEl.clientWidth));
+    });
   };
   windowEl.addEventListener('scroll', onScroll, { passive: true });
   ScrollTrigger.refresh();
-  return () => { media.revert(); windowEl.removeEventListener('scroll', onScroll); backdrop?.dispose(); container.replaceChildren(); container.hidden = true; section.classList.remove('projects-enhanced'); section.querySelector<HTMLElement>('.section-meta')!.textContent = '02 / Projects'; };
+  // ORIGINAL (preserved, not deleted — disabled by comment): return () => { media.revert(); windowEl.removeEventListener('scroll', onScroll); backdrop?.dispose(); container.replaceChildren(); container.hidden = true; section.classList.remove('projects-enhanced'); section.querySelector<HTMLElement>('.section-meta')!.textContent = '02 / Projects'; };
+  return () => { cancelAnimationFrame(scrollFrame); prev.removeEventListener('click', onPrev); next.removeEventListener('click', onNext); windowEl.removeEventListener('keydown', onKey); media.revert(); windowEl.removeEventListener('scroll', onScroll); backdrop?.dispose(); container.replaceChildren(); container.hidden = true; section.classList.remove('projects-enhanced'); section.querySelector<HTMLElement>('.section-meta')!.textContent = '02 / Projects'; };
 }

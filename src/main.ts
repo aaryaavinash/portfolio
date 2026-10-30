@@ -243,7 +243,8 @@ const projectsObserver = new IntersectionObserver(entries => {
   if (!entries.some(entry => entry.isIntersecting)) return;
   projectsObserver.disconnect();
   void import('./projects').then(({ mountProjects }) => {
-    if (!disposed) disposeProjects = mountProjects(projectsContainer, motion);
+    // ORIGINAL (preserved, not deleted — disabled by comment): if (!disposed) disposeProjects = mountProjects(projectsContainer, motion);
+    if (!disposed) disposeProjects = mountProjects(projectsContainer, motion, top => lenis.scrollTo(top));
   }).catch(error => { console.error('Project gallery could not load; selected projects remain available.', error); });
 }, { rootMargin: '800px 0px' });
 projectsObserver.observe(document.querySelector<HTMLElement>('#ventures')!);
