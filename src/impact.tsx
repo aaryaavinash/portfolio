@@ -6,12 +6,22 @@ import Counter from './components/Counter';
 import ActivityTerrain from './components/ActivityTerrain';
 import { parseContributions, type ContributionSeries } from './contributions';
 
+const initialStats = { publicRepos: 2, originals: 1, forks: 1, since: 2023 };
+
 function ImpactStats() {
   useLayoutEffect(() => { ScrollTrigger.refresh(); }, []);
+  const [stats, setStats] = useState(initialStats);
   const [history, setHistory] = useState<ContributionSeries | null>(null);
   const [failed, setFailed] = useState(false);
   useEffect(() => {
     const controller = new AbortController();
+    fetch('/api/github-snapshot', { signal: controller.signal })
+      .then(response => { if (!response.ok) throw new Error('GitHub snapshot unavailable'); return response.json(); })
+      .then(value => {
+        if (!value || !Number.isInteger(value.publicRepos) || !Number.isInteger(value.originals) || !Number.isInteger(value.forks) || !Number.isInteger(value.since)) throw new Error('Invalid GitHub snapshot');
+        setStats(value);
+      })
+      .catch(error => { if (!controller.signal.aborted) console.error(error); });
     fetch('https://github-contributions-api.jogruber.de/v4/aaryaavinash?y=last', { signal: controller.signal })
       .then(response => { if (!response.ok) throw new Error('Contribution feed unavailable'); return response.json(); })
       .then(value => setHistory(parseContributions(value)))
@@ -32,19 +42,19 @@ function ImpactStats() {
       threshold={0.1}
     >
       <dl className="stat">
-        <dd><Counter className="impact-counter" value={2} fontSize="inherit" motionBlur={false} fade={0.15} /></dd>
+        <dd><Counter className="impact-counter" value={stats.publicRepos} fontSize="inherit" motionBlur={false} fade={0.15} /></dd>
         <dt>Public repositories</dt>
       </dl>
       <dl className="stat">
-        <dd><Counter className="impact-counter" value={1} fontSize="inherit" motionBlur={false} fade={0.15} /></dd>
+        <dd><Counter className="impact-counter" value={stats.originals} fontSize="inherit" motionBlur={false} fade={0.15} /></dd>
         <dt>Original project</dt>
       </dl>
       <dl className="stat">
-        <dd><Counter className="impact-counter" value={1} fontSize="inherit" motionBlur={false} fade={0.15} /></dd>
+        <dd><Counter className="impact-counter" value={stats.forks} fontSize="inherit" motionBlur={false} fade={0.15} /></dd>
         <dt>Open source fork</dt>
       </dl>
       <dl className="stat">
-        <dd><Counter className="impact-counter" value={2023} fontSize="inherit" motionBlur={false} fade={0.15} /></dd>
+        <dd><Counter className="impact-counter" value={stats.since} fontSize="inherit" motionBlur={false} fade={0.15} /></dd>
         <dt>GitHub account since</dt>
       </dl>
     </AnimatedContent>
