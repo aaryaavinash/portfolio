@@ -87,7 +87,7 @@ When prefers-reduced-motion is active: skip loader, show text at final state, na
 
 User explicitly requested GSAP, ScrollTrigger and Lenis. This supersedes the earlier CSS-only orchestration/IntersectionObserver reveal approach.
 
-- GSAP3.15.0 + ScrollTrigger; Lenis1.3.26. One GSAP ticker drives Lenis with seconds→milliseconds conversion. Lenis scroll events call ScrollTrigger.update. Lag smoothing disabled as recommended in the Lenis integration docs.
+- GSAP3.15.0 + ScrollTrigger; Lenis1.3.26. One GSAP ticker drives Lenis with seconds→milliseconds conversion. Lenis scroll events call ScrollTrigger.update. GSAP's default lag handling protects animations after tab suspension.
 - Intro is one cancellable timeline, retaining the 2s count, 300ms label fade, 200ms hold, 650ms wipe, and original hero entry offsets/staggers. Counter text writes only when the rounded integer changes.
 - Sections use one-shot ScrollTriggers starting at `top bottom`. Transform/opacity tweens use `expo.out`; quote reveals use `power3.out`; wipe uses `power3.out`. These native GSAP eases replace the previous CSS curves. No per-scroll layout measurement or scrubbed paragraph animations.
 - Menu uses one reversible timeline, with faster close playback; rapid toggles retarget the current progress. Focus/inert/Escape behavior is retained.
@@ -107,4 +107,4 @@ AnimatedContent wraps the four impact stats: 40px vertical travel, 1.1s power3.o
 
 # Projects horizontal motion — 2026-10-30
 
-At 1024px and above, GSAP ScrollTrigger pins the Projects stage and scrubs the track from first to last frame against vertical scroll distance. The active frame scales and gains opacity, while the progress rail and 01–20 counter follow the scroll. One low-resolution WebGL canvas supplies a subtle moving backdrop while visible. It pauses when hidden or reduced motion is requested; WebGL failure leaves the CSS background. Below 1024px or with reduced motion, the track becomes native horizontal scroll with snap points and no pin.
+At 1024px and above, GSAP ScrollTrigger pins the Projects stage and scrubs the track from first to last frame against vertical scroll distance. Lenis supplies the smoothing, so the track, progress rail, and 01–20 counter share one scroll position. The active frame scales and gains opacity. One capped-resolution WebGL canvas draws a moving orbital field behind the work while visible. It pauses when hidden or reduced motion is requested; WebGL failure leaves the CSS background. Nearby frames begin image loading as the active frame changes. Below 1024px or with reduced motion, the track becomes native horizontal scroll with snap points and no pin.

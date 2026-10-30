@@ -36,6 +36,7 @@ function createBackdrop(canvas: HTMLCanvasElement, reduced: MediaQueryList): Bac
   gl.shaderSource(vertex, 'attribute vec2 p; void main(){gl_Position=vec4(p,0.,1.);}');
   gl.compileShader(vertex);
   const fragment = gl.createShader(gl.FRAGMENT_SHADER)!;
+  /* ORIGINAL (preserved, not deleted — disabled by comment):
   gl.shaderSource(fragment, `precision mediump float;
     uniform vec2 resolution; uniform float time; uniform float progress;
     void main(){
@@ -47,6 +48,29 @@ function createBackdrop(canvas: HTMLCanvasElement, reduced: MediaQueryList): Bac
       vec3 ink=vec3(.018,.017,.025);
       ink+=vec3(.14,.025,.015)*(bloom*.7+wave*.07)*edge;
       ink+=vec3(.015,.025,.035)*max(0.,wave)*edge;
+      gl_FragColor=vec4(ink,1.);
+    }`);
+  */
+  gl.shaderSource(fragment, `precision mediump float;
+    uniform vec2 resolution; uniform float time; uniform float progress;
+    void main(){
+      vec2 uv=gl_FragCoord.xy/resolution;
+      vec2 p=(uv-.5)*vec2(resolution.x/resolution.y,1.);
+      vec2 q=p-vec2(.16+.16*sin(progress*6.283),.02);
+      float angle=atan(q.y,q.x);
+      float radius=length(q);
+      float warp=.02*sin(angle*8.+time*.45+progress*14.)+.01*sin(angle*17.-time*.3);
+      float ring=exp(-85.*abs(radius-(.37+warp)));
+      float echo=exp(-30.*abs(radius-(.49+warp*.5)));
+      float aura=exp(-8.*radius);
+      float scan=.5+.5*sin(angle*28.+progress*18.);
+      float streak=exp(-35.*abs(q.y+.15*sin(q.x*7.+time*.15+progress*8.)))*(1.-smoothstep(0.,.8,radius));
+      vec3 ink=vec3(.018,.017,.025);
+      ink+=vec3(.55,.05,.025)*ring*(.6+.4*scan);
+      ink+=vec3(.26,.18,.14)*ring*pow(max(0.,sin(angle+time*.12)),4.);
+      ink+=vec3(.17,.025,.02)*echo;
+      ink+=vec3(.06,.008,.006)*aura;
+      ink+=vec3(.12,.02,.015)*streak;
       gl_FragColor=vec4(ink,1.);
     }`);
   gl.compileShader(fragment);

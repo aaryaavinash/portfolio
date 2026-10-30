@@ -26,7 +26,7 @@ This is my personal space on the web. It brings together software, design, tradi
 <!-- ORIGINAL (preserved, not deleted — disabled by comment): The portfolio includes selected projects, a GitHub activity view, an interactive gaming card, a music section, social profile cards, and a contact ticket. Public GitHub data is fetched live. Music uses public Last.fm scrobbles when available; the record card is a display, not an audio player. Instagram and Discord cards show confirmed profile details without invented live metrics. -->
 The portfolio includes selected projects, a GitHub activity view, an interactive gaming card, a music section, social profile cards, and a contact ticket. Public GitHub data is fetched live. Music uses public Last.fm scrobbles when available; the record card is a display, not an audio player. The Discord card embeds Aarya's live public status through [Discord GitHub Preview](https://github.com/the-snesler/discord-github-readme), with a static fallback. Instagram shows confirmed profile details without invented metrics.
 
-The Projects chapter features 20 live web experiences in a GSAP ScrollTrigger filmstrip, with a lightweight WebGL backdrop on desktop and swipe navigation on smaller screens. Each cover is the project screenshot in its public repository.
+The Projects chapter features 20 live web experiences in a Lenis-synchronized GSAP ScrollTrigger filmstrip, with an animated WebGL orbital backdrop on desktop and swipe navigation on smaller screens. Each cover is the project screenshot in its public repository.
 
 ## Built with
 
