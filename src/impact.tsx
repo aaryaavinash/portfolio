@@ -6,7 +6,8 @@ import Counter from './components/Counter';
 import ActivityTerrain from './components/ActivityTerrain';
 import { parseContributions, type ContributionSeries } from './contributions';
 
-const initialStats = { publicRepos: 2, originals: 1, forks: 1, since: 2023 };
+// ORIGINAL (preserved, not deleted — disabled by comment): const initialStats = { publicRepos: 2, originals: 1, forks: 1, since: 2023 };
+const initialStats = { publicRepos: 25, originals: 24, forks: 1, since: 2023 };
 
 function ImpactStats() {
   useLayoutEffect(() => { ScrollTrigger.refresh(); }, []);
@@ -47,11 +48,11 @@ function ImpactStats() {
       </dl>
       <dl className="stat">
         <dd><Counter className="impact-counter" value={stats.originals} fontSize="inherit" motionBlur={false} fade={0.15} /></dd>
-        <dt>Original project</dt>
+        <dt>Original repositories</dt>
       </dl>
       <dl className="stat">
         <dd><Counter className="impact-counter" value={stats.forks} fontSize="inherit" motionBlur={false} fade={0.15} /></dd>
-        <dt>Open source fork</dt>
+        <dt>Open source forks</dt>
       </dl>
       <dl className="stat">
         <dd><Counter className="impact-counter" value={stats.since} fontSize="inherit" motionBlur={false} fade={0.15} /></dd>

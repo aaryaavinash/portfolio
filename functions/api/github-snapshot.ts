@@ -1,5 +1,5 @@
 export async function onRequestGet(): Promise<Response> {
-  const headers = { Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28' };
+  const headers = { Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28', 'User-Agent': 'Aarya-Portfolio' };
   try {
     const [profileResponse, firstReposResponse] = await Promise.all([
       fetch('https://api.github.com/users/aaryaavinash', { headers, signal: AbortSignal.timeout(8000) }),
