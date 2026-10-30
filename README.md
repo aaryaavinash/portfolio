@@ -28,7 +28,7 @@ The portfolio includes selected projects, a GitHub activity view, an interactive
 
 The Projects chapter features 20 live web experiences in a Lenis-synchronized GSAP ScrollTrigger filmstrip, with an animated WebGL orbital backdrop on desktop and swipe navigation on smaller screens. Each cover is the project screenshot in its public repository.
 
-An original AA line mark draws during the intro. A single capped-resolution WebGL field sits behind the rest of the portfolio and follows scroll and pointer position; it pauses while the dedicated Projects scene is visible, in hidden tabs, and under reduced motion. A desktop section rail offers direct chapter navigation.
+An original AA line mark draws during the intro and repeats in the header and footer. A single capped-resolution WebGL field sits behind the rest of the portfolio and follows scroll and pointer position; it pauses while the dedicated Projects scene is visible, in hidden tabs, and under reduced motion. A desktop section rail offers direct chapter navigation.
 
 ## Built with
 
